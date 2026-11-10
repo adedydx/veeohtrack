@@ -1,0 +1,14 @@
+# Local, uncommitted files — site coordinates, calibration, strategy, comprehensive design.
+# Anything matching *.local.* stays on the machine and is never pushed.
+*.local.*
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.render-venv/
+*.egg-info/
+.pytest_cache/
+
+# OS
+.DS_Store

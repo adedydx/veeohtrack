@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "veeohtrack"
+version = "0.0.0"
+description = "Edge computer-vision system for trail usage analytics"
+# Deployment target is Raspberry Pi OS Bookworm (Python 3.11). Floor is kept at
+# 3.9 for now so the skeleton runs on the current dev interpreter; we avoid
+# 3.10+-only syntax (e.g. dataclass slots=True) until we standardize on 3.11.
+requires-python = ">=3.9"
+dependencies = [
+    # Runtime deps are added per stage. The pure-logic stages (kinematics,
+    # counting, tracker, classifier) use numpy; the detector/capture stages
+    # pull in hardware libs (Hailo runtime, camera) behind the interfaces in
+    # interfaces.py — those are Raspberry-Pi-only and are intentionally not
+    # declared here so the pure-logic stages install and test on any machine.
+    "numpy>=1.24",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/veeohtrack"]
+
+[tool.pytest.ini_options]
+# src layout: make the package importable in tests without an editable install.
+pythonpath = ["src"]
+testpaths = ["tests"]
